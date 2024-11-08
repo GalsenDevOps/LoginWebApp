@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loginwebapp-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: loginwebapp
+  template:
+    metadata:
+      labels:
+        app: loginwebapp
+    spec:
+      containers:
+      - name: loginwebapp
+        image: gasendevops/loginwebapp:${BUILD_NUMBER}
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms512m -Xmx1024m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loginwebapp-service
+spec:
+  selector:
+    app: loginwebapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
