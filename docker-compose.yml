@@ -1,0 +1,20 @@
+version: "3"
+services:
+  loginwebapp:
+    image: gasendevops/loginwebapp:latest
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: "mysql://mysql:3306/devopsclass"
+      DATABASE_USER: "root"
+      DATABASE_PASSWORD: "D!eng1251#"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: "D!eng1251#"
+      MYSQL_DATABASE: "devopsclass"
+    ports:
+      - "3306:3306"
